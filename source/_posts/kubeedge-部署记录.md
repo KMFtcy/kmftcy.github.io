@@ -38,7 +38,7 @@ keadm init --advertise-address="THE-EXPOSED-IP"(only work since 1.3 release)
 1. 执行命令，获取云端 token
 
 ```shell
-keadm getoken
+keadm gettoken
 ```
 
 输出一段 token，需要手动记住:

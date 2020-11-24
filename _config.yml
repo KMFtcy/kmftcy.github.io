@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: http://example.com
+url: https://blog.kmfchaoyang.top
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -101,6 +101,10 @@ ignore:
 plugins:
   - "hexo-addlink"
 theme: landscape-plus
+
+addlink:
+  before_text: Comming from # text before the post link
+  after_text: by Chaoyang Tang # text after the post link
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

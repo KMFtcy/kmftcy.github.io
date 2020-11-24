@@ -24,7 +24,7 @@ tags:
 1. 初始化云端设备 kubeedge 组件
 
 ```shell
-keadm init --advertise-address="THE-EXPOSED-IP"(only work since 1.3 release)
+keadm init --advertise-address="THE-EXPOSED-IP"(only work since 1.3 release) --kubeedge-version=1.4.0
 ```
 
 默认情况下，使用的是本地的 ip。
@@ -50,7 +50,7 @@ keadm gettoken
 2. 执行命令，加入云端节点
 
 ```shell
-keadm join --cloudcore-ipport=192.168.20.50:10000 --token=27a37ef16159f7d3be8fae95d588b79b3adaaf92727b72659eb89758c66ffda2.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTAyMTYwNzd9.JBj8LLYWXwbbvHKffJBpPd5CyxqapRQYDIXtFZErgYE
+keadm join --cloudcore-ipport=192.168.20.50:10000 --token=27a37ef16159f7d3be8fae95d588b79b3adaaf92727b72659eb89758c66ffda2.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTAyMTYwNzd9.JBj8LLYWXwbbvHKffJBpPd5CyxqapRQYDIXtFZErgYE --kubeedge-version=1.4.0
 ```
 
 执行到这里，节点就已经顺利加入 kubeedge 中了，应该会看到有一个 edgecore 进程正在节点中运行。

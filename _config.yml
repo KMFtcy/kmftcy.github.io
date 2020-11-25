@@ -100,7 +100,7 @@ ignore:
 ## Themes: https://hexo.io/themes/
 plugins:
   - "hexo-addlink"
-theme: landscape-plus
+theme: next
 
 addlink:
   before_text: Comming from # text before the post link

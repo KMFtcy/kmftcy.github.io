@@ -6,6 +6,7 @@ BACKUP_THEMES_CONFIG_NAME=origin_themes_config.yml
 SELECTED_THEME=next
 
 
+echo "===deploy begin"
 # update themes submodule
 git submodule init
 git submodule update
@@ -20,3 +21,5 @@ hexo clean && hexo g && hexo d
 cp ${BACKUP_THEMES_CONFIG_NAME} themes/${SELECTED_THEME}/_config.yml
 rm ${BACKUP_THEMES_CONFIG_NAME}
 echo "===themes config restored"
+
+echo "===deploy completed"

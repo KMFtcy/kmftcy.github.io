@@ -102,9 +102,17 @@ plugins:
   - "hexo-addlink"
 theme: next
 
+# === plugins settings
 addlink:
   before_text: Comming from # text before the post link
   after_text: by Chaoyang Tang # text after the post link
+
+search:
+  path: ./public/search.xml
+  field: post
+  format: html
+  limit: 10000
+  content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

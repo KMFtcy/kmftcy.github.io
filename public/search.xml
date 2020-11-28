@@ -18,21 +18,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>kubeedge使用域名配置cloud地址</title>
-    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
-    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
-<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
-<ol>
-<li>生成证书</li>
-<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
-<li>配置文件中记住配对对应的文件位置</li>
-<li>手动起 cloudcore 和 edgecore</li>
-</ol>
-<p>TODO: 补充文件细节</p>
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
     <title>kubeedge 部署记录</title>
     <url>/2020/11/22/kubeedge-deploy/</url>
     <content><![CDATA[<h2 id="kubeedge-部署"><a href="#kubeedge-部署" class="headerlink" title="kubeedge 部署"></a>kubeedge 部署</h2><h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
@@ -121,6 +106,21 @@
 
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/22/kubeedge-deploy/">https://blog.kmfchaoyang.top/2020/11/22/kubeedge-deploy/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>kubeedge使用域名配置cloud地址</title>
+    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
+    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
+<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
+<ol>
+<li>生成证书</li>
+<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
+<li>配置文件中记住配对对应的文件位置</li>
+<li>手动起 cloudcore 和 edgecore</li>
+</ol>
+<p>TODO: 补充文件细节</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
 ]]></content>
   </entry>
 </search>

@@ -2,7 +2,7 @@
 title: 如何获取Github上最新的release版本
 date: 2020-11-25 23:43:43
 tags:
-description: 通过curl获得release的最新版本。
+description: 一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本。本文介绍一个通过curl获得release的最新版本的方法。
 ---
 
 一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本，这个事情用脚本去做好像就不是特别的方便。

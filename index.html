@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-26 23:09:18" itemprop="dateModified" datetime="2020-11-26T23:09:18+08:00">2020-11-26</time>
+                <time title="Modified: 2020-11-28 18:13:03" itemprop="dateModified" datetime="2020-11-28T18:13:03+08:00">2020-11-28</time>
               </span>
 
           
@@ -220,17 +220,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
-<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
-<ol>
-<li>生成证书</li>
-<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
-<li>配置文件中记住配对对应的文件位置</li>
-<li>手动起 cloudcore 和 edgecore</li>
-</ol>
-<p>TODO: 补充文件细节</p>
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
-
+          <p>在设置中代替ip，使用域名作为cloud地址配置。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/25/kubeedge-cloud-domain-setting/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

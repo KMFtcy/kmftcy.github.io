@@ -387,74 +387,14 @@
 
 <p>默认情况下，使用的是本地的 ip。</p>
 <p>在 1.3 之前的版本，还需要将初始化生成的证书手动拷贝到边端点上，目前最新版本已经更新到 1.5，实验所使用的是 1.4 版本，因此不需要执行这一步操作。</p>
-<p>执行到这里，云端就已经初始化成功了，应该会看到有一个 cloudcore 进程正在节点中运行。</p>
-<h4 id="部署边端"><a href="#部署边端" class="headerlink" title="部署边端"></a>部署边端</h4><ol>
-<li>执行命令，获取云端 token</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keadm gettoken</span><br></pre></td></tr></table></figure>
-
-<p>输出一段 token，需要手动记住:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">27a37ef16159f7d3be8fae95d588b79b3adaaf92727b72659eb89758c66ffda2.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTAyMTYwNzd9.JBj8LLYWXwbbvHKffJBpPd5CyxqapRQYDIXtFZErgYE</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>执行命令，加入云端节点</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keadm join --cloudcore-ipport=192.168.20.50:10000 --token=27a37ef16159f7d3be8fae95d588b79b3adaaf92727b72659eb89758c66ffda2.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTAyMTYwNzd9.JBj8LLYWXwbbvHKffJBpPd5CyxqapRQYDIXtFZErgYE --kubeedge-version=1.4.0</span><br></pre></td></tr></table></figure>
-
-<p>执行到这里，节点就已经顺利加入 kubeedge 中了，应该会看到有一个 edgecore 进程正在节点中运行。</p>
-<h3 id="手动部署"><a href="#手动部署" class="headerlink" title="手动部署"></a>手动部署</h3><h4 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
-<li><p>从 GitHub release 上下载最新的 kubeedge 发行版和 keadm。注意只有 1.5 版本开始，kubeedge 的发行版的压缩包中才有 cloudcore，怀疑是负责人忘记放进去了。</p>
-<p>如果需要更老的版本，可以在网络好的环境运行：</p>
-</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keadm init</span><br></pre></td></tr></table></figure>
-
-<p>该命令会在当前目录下载好所有需要的压缩包和 yaml 文件。这时候下载的压缩包（从 aws 下载）就有完整的执行文件了。</p>
-<ol start="2">
-<li>需要四个指定的 CRDs 的 yaml 文件，这个建议按上面说的方式下载。</li>
-</ol>
-<h4 id="创建一些-CRDs"><a href="#创建一些-CRDs" class="headerlink" title="创建一些 CRDs"></a>创建一些 CRDs</h4><p>这几个 crd 是 kubeedge 使用的模型,需要预先加入 k8s 集群。显然是可以提前下载下来的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/devices/devices_v1alpha2_device.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/devices/devices_v1alpha2_devicemodel.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/reliablesyncs/cluster_objectsync_v1alpha1.yaml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/reliablesyncs/objectsync_v1alpha1.yaml</span><br></pre></td></tr></table></figure>
-
-<h4 id="部署云端-1"><a href="#部署云端-1" class="headerlink" title="部署云端"></a>部署云端</h4><ol>
-<li>获得默认配置文件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cloudcore --minconfig &gt; cloudcore.yaml</span><br></pre></td></tr></table></figure>
-
-<p>TODO: 具体的配置内容</p>
-<ol start="2">
-<li>运行 cloudcore，建议后台运行并将输出重定向到 log 文件。</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cloudcore --config cloudcore.yaml</span><br></pre></td></tr></table></figure>
-
-<h4 id="部署边端-1"><a href="#部署边端-1" class="headerlink" title="部署边端"></a>部署边端</h4><ol>
-<li>获得默认配置文件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edgecore --minconfig &gt; edgecore.yaml</span><br></pre></td></tr></table></figure>
-
-<p>TODO: 具体的配置内容</p>
-<ol start="2">
-<li>获得云端服务器的 token，该 token 已经被保存到 kubernetes 集群当中了。</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret -nkubeedge tokensecret -o=jsonpath=&#x27;&#123;.data.tokendata&#125;&#x27; | base64 -d</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>将配置文件中的相关字段添加上 token</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i -e &quot;s|token: .*|token: $&#123;token&#125;|g&quot; edgecore.yaml</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>运行边端进程</li>
-</ol>
-<p>如果云端和边端为同一节点，则需要注明变量：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export CHECK_EDGECORE_ENVIRONMENT=&quot;false&quot;</span><br></pre></td></tr></table></figure>
-
-<p>运行边端进程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edgecore --config edgecore.yaml</span><br></pre></td></tr></table></figure>
-
-
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/22/kubeedge-deploy/">https://blog.kmfchaoyang.top/2020/11/22/kubeedge-deploy/</a> by Chaoyang Tang</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/22/kubeedge-deploy/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

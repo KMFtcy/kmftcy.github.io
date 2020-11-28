@@ -294,10 +294,6 @@
       
           <p>一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本，这个事情用脚本去做好像就不是特别的方便。<br>在 cdr/code-server 提供的安装脚本上，我找到一个非常好用的通用解决方案,原来 GitHub 已经提供了这样的 api 接口,只需要去请求就可以获得版本信息。</p>
 <p>以 code-server 为例，获取最新版本只需要短短三句：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">version=&quot;$(curl -fsSLI -o /dev/null -w &quot;%&#123;url_effective&#125;&quot; https://github.com/cdr/code-server/releases/latest)&quot;</span><br><span class="line">version=&quot;$&#123;version#https://github.com/cdr/code-server/releases/tag/&#125;&quot;</span><br><span class="line">version=&quot;$&#123;version#v&#125;&quot;</span><br></pre></td></tr></table></figure>
-
-<p>对于其他项目，只需要替换“cdr/code-server”中的项目名即可，例如替换为“kubeedge/kubeedge”。<br>有了版本号，就可以按照 release 出来的命名规则进行指定版本的下载了。例如对于 code-server，命名规则为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/cdr/code-server/releases/download/v$version/code-server_$&#123;version&#125;_$ARCH.deb</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/25/acquire-github-release-version/#more" rel="contents">
@@ -369,18 +365,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="kubeedge-部署"><a href="#kubeedge-部署" class="headerlink" title="kubeedge 部署"></a>kubeedge 部署</h2><h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
-<p>几个值得注意的点：</p>
-<ul>
-<li>目前只支持 ubuntu 和 centos，并且不支持树莓派</li>
-<li>需要使用到 10000 和 10002 端口</li>
-<li>kubeedge 分为云端和边端的部署</li>
-</ul>
-</blockquote>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
-<li>在 Github release 中下载 keadm，目前仅需要下载这个组件就可以完成初始化流程。</li>
-<li>云端需要有一个可以使用的 kubernetes 集群。</li>
-</ol>
+          <h2 id="kubeedge-部署"><a href="#kubeedge-部署" class="headerlink" title="kubeedge 部署"></a>kubeedge 部署</h2><h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/22/kubeedge-deploy/#more" rel="contents">

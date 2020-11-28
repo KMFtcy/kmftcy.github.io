@@ -2,12 +2,13 @@
 title: 如何获取Github上最新的release版本
 date: 2020-11-25 23:43:43
 tags:
+description: 通过curl获得release的最新版本。
 ---
 
 一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本，这个事情用脚本去做好像就不是特别的方便。
 在 cdr/code-server 提供的安装脚本上，我找到一个非常好用的通用解决方案,原来 GitHub 已经提供了这样的 api 接口,只需要去请求就可以获得版本信息。
 
-以 code-server 为例，获取最新版本只需要短短三句：
+以 code-server 为例，获取最新版本只需要三句 shell 脚本：
 
 ```shell
 version="$(curl -fsSLI -o /dev/null -w "%{url_effective}" https://github.com/cdr/code-server/releases/latest)"

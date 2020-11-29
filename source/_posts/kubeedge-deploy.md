@@ -1,7 +1,7 @@
 ---
 title: kubeedge 部署记录
 date: 2020-11-22 21:37:41
-tags: kubeedge
+tags: [kubeedge]
 description: 官方文档总结归纳以及部署实战小结。
 ---
 

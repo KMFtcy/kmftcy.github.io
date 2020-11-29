@@ -1,7 +1,7 @@
 ---
 title: kubeedge使用域名配置cloud地址
 date: 2020-11-25 23:50:41
-tags: kubeedge
+tags: [kubeedge]
 description: 在设置中代替ip，使用域名作为cloud地址配置。
 ---
 

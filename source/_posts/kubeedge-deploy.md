@@ -1,8 +1,8 @@
 ---
 title: kubeedge 部署记录
 date: 2020-11-22 21:37:41
-tags:
-description: 官方文档总结归纳。
+tags: kubeedge
+description: 官方文档总结归纳以及部署实战小结。
 ---
 
 ## kubeedge 部署
@@ -134,3 +134,11 @@ export CHECK_EDGECORE_ENVIRONMENT="false"
 ```shell
 edgecore --config edgecore.yaml
 ```
+
+## 一些发现
+
+keadm 部署的速度特别慢，其中一个原因就是 keadm 会从 aws 上拉取安装文件的压缩包，但是在国内速度特别慢，花费四十分钟有时还会中途被打断。
+
+但是后面发现，keadm 会对 `/etc/kubeedge`这个目录做检查，如果目录下面有指定目录（默认最新版本）压缩包，就直接进行 checksum 检查,如果正确就不会重复下载了。
+
+这也是为什么使用 keadm 命令的时候，建议特别指定 kubeedge-version，这样可以提前下载对应版本压缩包，节省部署时间。

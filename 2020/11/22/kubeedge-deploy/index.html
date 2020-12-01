@@ -28,7 +28,7 @@
 <meta property="og:description" content="官方文档总结归纳以及部署实战小结。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-22T13:37:41.000Z">
-<meta property="article:modified_time" content="2020-11-29T03:26:16.926Z">
+<meta property="article:modified_time" content="2020-12-01T10:46:33.225Z">
 <meta property="article:author" content="Chaoyang Tang">
 <meta property="article:tag" content="kubeedge">
 <meta name="twitter:card" content="summary">
@@ -216,7 +216,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-29 11:26:16" itemprop="dateModified" datetime="2020-11-29T11:26:16+08:00">2020-11-29</time>
+                <time title="Modified: 2020-12-01 18:46:33" itemprop="dateModified" datetime="2020-12-01T18:46:33+08:00">2020-12-01</time>
               </span>
 
           
@@ -231,7 +231,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="kubeedge-部署"><a href="#kubeedge-部署" class="headerlink" title="kubeedge 部署"></a>kubeedge 部署</h2><h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
+        <h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
 <p>几个值得注意的点：</p>
 <ul>
 <li>目前只支持 ubuntu 和 centos，并且不支持树莓派</li>
@@ -399,7 +399,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#kubeedge-%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">kubeedge 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-kubeadm-%E8%BF%9B%E8%A1%8C%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">使用 kubeadm 进行部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%BA%91%E7%AB%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">部署云端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BE%B9%E7%AB%AF"><span class="nav-number">1.1.3.</span> <span class="nav-text">部署边端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">1.2.</span> <span class="nav-text">手动部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%BA%9B-CRDs"><span class="nav-number">1.2.2.</span> <span class="nav-text">创建一些 CRDs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%BA%91%E7%AB%AF-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">部署云端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BE%B9%E7%AB%AF-1"><span class="nav-number">1.2.4.</span> <span class="nav-text">部署边端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%8F%91%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">一些发现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-kubeadm-%E8%BF%9B%E8%A1%8C%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">使用 kubeadm 进行部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%BA%91%E7%AB%AF"><span class="nav-number">1.2.</span> <span class="nav-text">部署云端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BE%B9%E7%AB%AF"><span class="nav-number">1.3.</span> <span class="nav-text">部署边端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">手动部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%BA%9B-CRDs"><span class="nav-number">2.2.</span> <span class="nav-text">创建一些 CRDs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%BA%91%E7%AB%AF-1"><span class="nav-number">2.3.</span> <span class="nav-text">部署云端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BE%B9%E7%AB%AF-1"><span class="nav-number">2.4.</span> <span class="nav-text">部署边端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%8F%91%E7%8E%B0"><span class="nav-number"></span> <span class="nav-text">一些发现</span></a></div>
       </div>
       <!--/noindex-->
 

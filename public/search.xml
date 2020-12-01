@@ -38,7 +38,7 @@
   <entry>
     <title>kubeedge 部署记录</title>
     <url>/2020/11/22/kubeedge-deploy/</url>
-    <content><![CDATA[<h2 id="kubeedge-部署"><a href="#kubeedge-部署" class="headerlink" title="kubeedge 部署"></a>kubeedge 部署</h2><h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
+    <content><![CDATA[<h3 id="使用-kubeadm-进行部署"><a href="#使用-kubeadm-进行部署" class="headerlink" title="使用 kubeadm 进行部署"></a>使用 kubeadm 进行部署</h3><blockquote>
 <p>几个值得注意的点：</p>
 <ul>
 <li>目前只支持 ubuntu 和 centos，并且不支持树莓派</li>

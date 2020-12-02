@@ -48,7 +48,7 @@ ENTRYPOINT ["edgecore","--config","/etc/kubeedge/config/edgecore.yaml"]
 cloudcore 容器运行出乎意料地简单，只要注意两点就可以了：
 
 1. 把 10000、10001、10002 端口开放出来，这几个端口是 cloudcore 提供服务的。当然也可以自己指定，自己指定的开放对应端口就好了，都在 cloudcore.yaml 里面写得明明白白的。
-2. 把本机 kubernetes 集群的 admin.conf——一般已经复制成~/.kube/config 了——挂到容器的~/.kube 目录下面。
+2. 把本机 kubernetes 集群的 admin.conf——一般已经复制成\~/.kube/config 了——挂到容器的\~/.kube 目录下面。
 
 完事，复制粘贴都没这么容易的。
 这是我最终可以运行的 docker 命令:

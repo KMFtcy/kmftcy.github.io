@@ -5,8 +5,6 @@ tags: [kubeedge]
 description: 官方文档总结归纳以及部署实战小结。
 ---
 
-## kubeedge 部署
-
 ### 使用 kubeadm 进行部署
 
 > 几个值得注意的点：

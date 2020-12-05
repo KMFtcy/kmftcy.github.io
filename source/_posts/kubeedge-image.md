@@ -124,12 +124,16 @@ edgecore 容器的运行没有 cloudcore 那么顺利，遇到了不少问题，
 
    既然已经开启了那就用吧，把 network 换成 host 模式，就可以正常使用了。
 
+4. 在通过集群给边结点分配容器应用的时候，出现报错。发现 edgecore 需要将容器的层文件/var/lib/docker 挂载到自己的目录下面/var/lib/edged 中，因此还需要将这两个目录挂载到容器中，才能通过 k8s 部署容器。
+
 如此这般以后，edgecore 就可以正常使用了。这里记录一下我最终可以运行的 docker 指令：
 
 ```shell
 docker run -d -P \
 --privileged=true \
 --network=host \
+-v /var/lib/edged:/var/lib/edged \
+-v /var/lib/docker:/var/lib/docker \
 -v /var/run/docker.sock:/var/var/run/docker.sock \
 -v /var/lib/kubeedge:/var/lib/kubeedge \
 -v /etc/kubeedge/:/etc/kubeedge \ #存放配置文件

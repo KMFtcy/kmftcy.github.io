@@ -1,7 +1,7 @@
 # ===
 # === ENV variables
 # ===
-THEMES_CONFIG_FILE_NAME=themes_config.yml
+THEMES_CONFIG_FILE_NAME=themes-config/themes_config.yml
 BACKUP_THEMES_CONFIG_NAME=origin_themes_config.yml
 SELECTED_THEME=next
 

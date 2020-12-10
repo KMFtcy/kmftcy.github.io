@@ -18,6 +18,37 @@
 ]]></content>
   </entry>
   <entry>
+    <title>cobra</title>
+    <url>/2020/12/10/cobra/</url>
+    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/cobra/">https://blog.kmfchaoyang.top/2020/12/10/cobra/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>docker整理（一）</title>
+    <url>/2020/12/06/docker-summary-1/</url>
+    <content><![CDATA[<p>随着工作中使用得越来越多，对于容器技术的使用仅仅限于概念上的理解在遇到问题的时候越来越捉襟见肘。</p>
+<p>例如，在 k8s 集群使用的过程当中，偶尔会有容器的端口没能映射出来，也就是在有 service 资源的情况下容器内能访问到服务、但是在容器外不能访问到服务的情况，重启后这样的情况就恢复了。我一直怀疑是 iptables 出现了问题，但是也没有办法深入捕捉。因此深切地感受到需要更多地对底层的原理有精细的了解，才能更好地处理这样的问题。</p>
+<p>容器技术现在最流行的莫过于 docker 技术的应用，但是 docker 技术涉及比较繁杂，因此希望能做一些简单的整理，慢慢梳理出自己的知识图谱。</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>大部分基础知识都是来自与哔哩哔哩上的网络公开课，一部分补充来自于 James Turnbull 所著的《第一本 Docker 书》中总结的。<br>书中的知识框架并没有公开课那么清晰，但是有一些比较好的补充。</p>
+<ol>
+<li>docker 简介</li>
+<li>docker 常用命令</li>
+<li>dockerfile 编写</li>
+</ol>
+<h2 id="制作一个-docker"><a href="#制作一个-docker" class="headerlink" title="制作一个 docker"></a>制作一个 docker</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/docker-summary-1/">https://blog.kmfchaoyang.top/2020/12/06/docker-summary-1/</a> by Chaoyang Tang</p>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的hexo博客制作</title>
+    <url>/2020/12/06/hexo-summary/</url>
+    <content><![CDATA[<h2 id="github-集成"><a href="#github-集成" class="headerlink" title="github 集成"></a>github 集成</h2><h2 id="主题与主题配置"><a href="#主题与主题配置" class="headerlink" title="主题与主题配置"></a>主题与主题配置</h2><h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p>#TODO 包含部署脚本，来避免对主题项目的修改</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/">https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
     <title>kubeedge使用域名配置cloud地址</title>
     <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
     <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
@@ -180,12 +211,26 @@
 
 <p>既然已经开启了那就用吧，把 network 换成 host 模式，就可以正常使用了。</p>
 </li>
+<li><p>在通过集群给边结点分配容器应用的时候，出现报错。发现 edgecore 需要将容器的层文件/var/lib/docker 挂载到自己的目录下面/var/lib/edged 中，因此还需要将这两个目录挂载到容器中，才能通过 k8s 部署容器。</p>
+</li>
 </ol>
 <p>如此这般以后，edgecore 就可以正常使用了。这里记录一下我最终可以运行的 docker 指令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -P \</span><br><span class="line">--privileged=true \</span><br><span class="line">--network=host \</span><br><span class="line">-v /var/run/docker.sock:/var/var/run/docker.sock \</span><br><span class="line">-v /var/lib/kubeedge:/var/lib/kubeedge \</span><br><span class="line">-v /etc/kubeedge/:/etc/kubeedge \ #存放配置文件</span><br><span class="line"><span class="meta">$</span><span class="bash">&#123;IMAGE_NAME&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -P \</span><br><span class="line">--privileged=true \</span><br><span class="line">--network=host \</span><br><span class="line">-v /var/lib/edged:/var/lib/edged \</span><br><span class="line">-v /var/lib/docker:/var/lib/docker \</span><br><span class="line">-v /var/run/docker.sock:/var/var/run/docker.sock \</span><br><span class="line">-v /var/lib/kubeedge:/var/lib/kubeedge \</span><br><span class="line">-v /etc/kubeedge/:/etc/kubeedge \ #存放配置文件</span><br><span class="line"><span class="meta">$</span><span class="bash">&#123;IMAGE_NAME&#125;</span></span><br></pre></td></tr></table></figure>
 
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/">https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>viper</title>
+    <url>/2020/12/10/viper/</url>
+    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/viper/">https://blog.kmfchaoyang.top/2020/12/10/viper/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>logrus</title>
+    <url>/2020/12/10/logrus/</url>
+    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
 ]]></content>
   </entry>
 </search>

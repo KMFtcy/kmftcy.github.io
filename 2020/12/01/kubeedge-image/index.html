@@ -28,7 +28,7 @@
 <meta property="og:description" content="将 kubeedge 放入容器当中，这件事听起来就像在 container 里面使用 docker 一样有些错位。 可能有些人会说，这不就像是 kubernetes 一样，把组件容器化嘛,像是 apiserver、controller 都是以容器形式提供服务的。但是 kubeedge 组件的身份更像是 kubelet，以一个进程的身份调用接口、拉起容器，而不知道是什么原因 kubernetes 并">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-01T12:26:45.000Z">
-<meta property="article:modified_time" content="2020-12-02T15:47:38.108Z">
+<meta property="article:modified_time" content="2020-12-05T14:26:44.075Z">
 <meta property="article:author" content="Chaoyang Tang">
 <meta name="twitter:card" content="summary">
 
@@ -215,7 +215,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-02 23:47:38" itemprop="dateModified" datetime="2020-12-02T23:47:38+08:00">2020-12-02</time>
+                <time title="Modified: 2020-12-05 22:26:44" itemprop="dateModified" datetime="2020-12-05T22:26:44+08:00">2020-12-05</time>
               </span>
 
           
@@ -275,9 +275,11 @@
 
 <p>既然已经开启了那就用吧，把 network 换成 host 模式，就可以正常使用了。</p>
 </li>
+<li><p>在通过集群给边结点分配容器应用的时候，出现报错。发现 edgecore 需要将容器的层文件/var/lib/docker 挂载到自己的目录下面/var/lib/edged 中，因此还需要将这两个目录挂载到容器中，才能通过 k8s 部署容器。</p>
+</li>
 </ol>
 <p>如此这般以后，edgecore 就可以正常使用了。这里记录一下我最终可以运行的 docker 指令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P \</span><br><span class="line">--privileged=true \</span><br><span class="line">--network=host \</span><br><span class="line">-v /var/run/docker.sock:/var/var/run/docker.sock \</span><br><span class="line">-v /var/lib/kubeedge:/var/lib/kubeedge \</span><br><span class="line">-v /etc/kubeedge/:/etc/kubeedge \ #存放配置文件</span><br><span class="line"><span class="meta">$</span><span class="bash">&#123;IMAGE_NAME&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P \</span><br><span class="line">--privileged=true \</span><br><span class="line">--network=host \</span><br><span class="line">-v /var/lib/edged:/var/lib/edged \</span><br><span class="line">-v /var/lib/docker:/var/lib/docker \</span><br><span class="line">-v /var/run/docker.sock:/var/var/run/docker.sock \</span><br><span class="line">-v /var/lib/kubeedge:/var/lib/kubeedge \</span><br><span class="line">-v /etc/kubeedge/:/etc/kubeedge \ #存放配置文件</span><br><span class="line"><span class="meta">$</span><span class="bash">&#123;IMAGE_NAME&#125;</span></span><br></pre></td></tr></table></figure>
 
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/">https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/</a> by Chaoyang Tang</p>
@@ -299,7 +301,10 @@
     <a href="/2020/11/25/kubeedge-cloud-domain-setting/" rel="prev" title="kubeedge使用域名配置cloud地址">
       <i class="fa fa-chevron-left"></i> kubeedge使用域名配置cloud地址
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/06/docker-summary-1/" rel="next" title="docker整理（一）">
+      docker整理（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -372,14 +377,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

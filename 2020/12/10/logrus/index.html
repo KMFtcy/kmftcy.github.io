@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"blog.kmfchaoyang.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="Comming from https:&#x2F;&#x2F;blog.kmfchaoyang.top&#x2F;2020&#x2F;12&#x2F;10&#x2F;logrus&#x2F; by Chaoyang Tang">
+  <meta name="description" content="logrus 是 golang 一个用于日志方面的开源库，在第一次使用以后，我就喜欢上了它的小巧和实用性。专心将一件事做好，logrus 也富有 unix 的气息。而且 logrus 的接口还完全与 golang 自带的 log 库兼容，使得不使用 logrus 的程序转移在 logrus 上也几乎是无痛的。 这里总结一些使用 logrus 中的实践 日志实例的初始化 创建 logger 实例">
 <meta property="og:type" content="article">
 <meta property="og:title" content="logrus">
 <meta property="og:url" content="https://blog.kmfchaoyang.top/2020/12/10/logrus/index.html">
 <meta property="og:site_name" content="Chaoyang&#39;s Blog">
-<meta property="og:description" content="Comming from https:&#x2F;&#x2F;blog.kmfchaoyang.top&#x2F;2020&#x2F;12&#x2F;10&#x2F;logrus&#x2F; by Chaoyang Tang">
+<meta property="og:description" content="logrus 是 golang 一个用于日志方面的开源库，在第一次使用以后，我就喜欢上了它的小巧和实用性。专心将一件事做好，logrus 也富有 unix 的气息。而且 logrus 的接口还完全与 golang 自带的 log 库兼容，使得不使用 logrus 的程序转移在 logrus 上也几乎是无痛的。 这里总结一些使用 logrus 中的实践 日志实例的初始化 创建 logger 实例">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-10T15:33:44.000Z">
-<meta property="article:modified_time" content="2020-12-10T15:33:44.797Z">
+<meta property="article:modified_time" content="2020-12-13T12:52:55.862Z">
 <meta property="article:author" content="Chaoyang Tang">
+<meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">
@@ -210,6 +211,13 @@
 
               <time title="Created: 2020-12-10 23:33:44" itemprop="dateCreated datePublished" datetime="2020-12-10T23:33:44+08:00">2020-12-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-13 20:52:55" itemprop="dateModified" datetime="2020-12-13T20:52:55+08:00">2020-12-13</time>
+              </span>
 
           
 
@@ -222,7 +230,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
+        <p>logrus 是 golang 一个用于日志方面的开源库，在第一次使用以后，我就喜欢上了它的小巧和实用性。专心将一件事做好，logrus 也富有 unix 的气息。<br>而且 logrus 的接口还完全与 golang 自带的 log 库兼容，使得不使用 logrus 的程序转移在 logrus 上也几乎是无痛的。</p>
+<p>这里总结一些使用 logrus 中的实践</p>
+<h2 id="日志实例的初始化"><a href="#日志实例的初始化" class="headerlink" title="日志实例的初始化"></a>日志实例的初始化</h2><ol>
+<li>创建 logger 实例</li>
+</ol>
+<p>logger 对象负责日志的输出,创建的时候，我们可以借用 golang 中的 sync.Once 对象，帮助我们完成单例对象的创建。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">singleton := sync.Once</span><br><span class="line"><span class="keyword">var</span> logger *logrus.Logger</span><br><span class="line"></span><br><span class="line">singleton.Do(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    logger = logrus.New()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>多目标输出</li>
+</ol>
+<p>输出日志的时候，我们往往有多个输出目标：既需要在命令行输出提示，也需要保存在日志文件当中。<br>logger 对象可以设置一个 writer，我们可以借助 io.MultiWriter 对象实现这个功能。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create log file</span></span><br><span class="line">logFilePath := path.Join(config.AppConfig.Log.Path, config.AppConfig.Log.FileName)</span><br><span class="line">fileWriter, err := os.OpenFile(logFilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, <span class="number">0755</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    logger.Panicln(<span class="string">&quot;Fatal error open log file: %s&quot;</span>, err)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// set log output</span></span><br><span class="line">mw := io.MultiWriter(os.Stdout, fileWriter)</span><br><span class="line">logger.SetOutput(mw)</span><br></pre></td></tr></table></figure>
+
+<p>这样就能实现多个输出的日志输出了</p>
+<h2 id="日志格式的初始化"><a href="#日志格式的初始化" class="headerlink" title="日志格式的初始化"></a>日志格式的初始化</h2><p>logrus 提供了一个接口,用于设定日志输出的格式:</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(formatter *logFormatter)</span> <span class="title">Format</span><span class="params">(entry *logrus.Entry)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只要是实现了这个接口的对象，都可以作为格式整理的对象,返回的 byte 数组就是日志内容。</p>
+<p>logrus.Entry 对象包含了必要的日志信息，这里是我习惯用的日志格式定义：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">timestamp := time.Now().Local().Format(<span class="string">&quot;2006/01/02 15:04:05&quot;</span>)</span><br><span class="line">msg := fmt.Sprintf(<span class="string">&quot;%s [%s] %s\n&quot;</span>, timestamp, strings.ToUpper(entry.Level.String()), entry.Message)</span><br><span class="line"><span class="keyword">return</span> []<span class="keyword">byte</span>(msg), <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="日志等级"><a href="#日志等级" class="headerlink" title="日志等级"></a>日志等级</h2><p>logrus 分为多个日志等级:</p>
+<ul>
+<li>trace</li>
+<li>info</li>
+<li>debug</li>
+<li>warnings</li>
+<li>error</li>
+<li>fatal</li>
+<li>panic</li>
+</ul>
+<p>这几个等级的优先级按从上到下的顺序排列。这样带来的好处是：</p>
+<ol>
+<li>可以设定日志输出的等级，在生产环境中可以不用输出太多的日志信息，影响 error 的定位和发现。</li>
+<li>在查找日志信息的时候，可以缩小查找日志范围，也同样能更好定位和发现问题。</li>
+</ol>
+<p>同样，logger 对象有正对这几个等级的不同输出方式：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">logger.Traceln()</span><br><span class="line">logger.Infoln()</span><br><span class="line">logger.Debugln()</span><br><span class="line">logger.Warnln()</span><br><span class="line">logger.Errorln()</span><br><span class="line">logger.Fatalln()</span><br><span class="line">logger.Panicln()</span><br></pre></td></tr></table></figure>
+
+<p>其中，Fatalln() 和 Panicln() 方法会在日志输出完成以后使程序以 Fatal（os.exit()） 或者 Panic 的方式退出。</p>
+<p>我们可以在程序中轻易调节 logger 的输出等级：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Only log the warning severity or above.</span></span><br><span class="line">log.SetLevel(log.WarnLevel)</span><br></pre></td></tr></table></figure>
+
+<p>等级调整好以后，低于设定等级的日志信息就不会输出了。</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
 
     </div>
 
@@ -231,6 +284,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/golang/" rel="tag"># golang</a>
+          </div>
 
         
 
@@ -303,6 +359,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">日志实例的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">日志格式的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E7%AD%89%E7%BA%A7"><span class="nav-number">3.</span> <span class="nav-text">日志等级</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

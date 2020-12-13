@@ -3,7 +3,8 @@
   <entry>
     <title>cobra</title>
     <url>/2020/12/10/cobra/</url>
-    <content><![CDATA[<p>cobra 是 golang 一个用于构建命令行程序的开源库，它提供了对于构建命令行程序非常多的便利特性。例如命令行参数、子命令、自动生成帮助文档等。<br>最近刚好在编写一个命令行程序，总结一些使用过程中的实践。</p>
+    <content><![CDATA[<p>cobra 是 golang 一个用于构建命令行程序的开源库，它提供了对于构建命令行程序非常多的便利特性。例如命令行参数、子命令、自动生成帮助文档等。</p>
+<p>最近刚好在编写一个命令行程序，总结一些使用过程中的实践。</p>
 <h2 id="创建一个命令实例。"><a href="#创建一个命令实例。" class="headerlink" title="创建一个命令实例。"></a>创建一个命令实例。</h2><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">cmd := &amp;cobra.Command&#123;</span><br><span class="line">    Use:   <span class="string">&quot;test&quot;</span>,</span><br><span class="line">    Short: <span class="string">&quot;Print the version number of cobrademo&quot;</span>,</span><br><span class="line">    Long:  <span class="string">`All software has versions. This is cobrademo&#x27;s`</span>,</span><br><span class="line">    Run: <span class="function"><span class="keyword">func</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">        run()</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Running&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>一个命令实例是指被使用的命令行程序，当使用命令”ls”的时候，是在使用 ls 这个命令行程序， 当使用命令”ls | grep target”的时候，就使用了 ls 和 grep 两个命令行程序。</p>
@@ -62,13 +63,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我的hexo博客制作</title>
-    <url>/2020/12/06/hexo-summary/</url>
-    <content><![CDATA[<h2 id="github-集成"><a href="#github-集成" class="headerlink" title="github 集成"></a>github 集成</h2><h2 id="主题与主题配置"><a href="#主题与主题配置" class="headerlink" title="主题与主题配置"></a>主题与主题配置</h2><h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p>#TODO 包含部署脚本，来避免对主题项目的修改</p>
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/">https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
     <title>如何获取Github上最新的release版本</title>
     <url>/2020/11/25/acquire-github-release-version/</url>
     <content><![CDATA[<p>一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本，这个事情用脚本去做好像就不是特别的方便。<br>在 cdr/code-server 提供的安装脚本上，我找到一个非常好用的通用解决方案,原来 GitHub 已经提供了这样的 api 接口,只需要去请求就可以获得版本信息。</p>
@@ -84,6 +78,31 @@
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/acquire-github-release-version/">https://blog.kmfchaoyang.top/2020/11/25/acquire-github-release-version/</a> by Chaoyang Tang</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>我的hexo博客制作</title>
+    <url>/2020/12/06/hexo-summary/</url>
+    <content><![CDATA[<h2 id="github-集成"><a href="#github-集成" class="headerlink" title="github 集成"></a>github 集成</h2><h2 id="主题与主题配置"><a href="#主题与主题配置" class="headerlink" title="主题与主题配置"></a>主题与主题配置</h2><h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p>#TODO 包含部署脚本，来避免对主题项目的修改</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/">https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>kubeedge使用域名配置cloud地址</title>
+    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
+    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
+<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
+<ol>
+<li>生成证书</li>
+<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
+<li>配置文件中记住配对对应的文件位置</li>
+<li>手动起 cloudcore 和 edgecore</li>
+</ol>
+<p>TODO: 补充文件细节</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
+]]></content>
+      <tags>
+        <tag>kubeedge</tag>
+      </tags>
   </entry>
   <entry>
     <title>docker整理（一）</title>
@@ -202,32 +221,62 @@
   <entry>
     <title>logrus</title>
     <url>/2020/12/10/logrus/</url>
-    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
+    <content><![CDATA[<p>logrus 是 golang 一个用于日志方面的开源库，在第一次使用以后，我就喜欢上了它的小巧和实用性。专心将一件事做好，logrus 也富有 unix 的气息。<br>而且 logrus 的接口还完全与 golang 自带的 log 库兼容，使得不使用 logrus 的程序转移在 logrus 上也几乎是无痛的。</p>
+<p>这里总结一些使用 logrus 中的实践</p>
+<h2 id="日志实例的初始化"><a href="#日志实例的初始化" class="headerlink" title="日志实例的初始化"></a>日志实例的初始化</h2><ol>
+<li>创建 logger 实例</li>
+</ol>
+<p>logger 对象负责日志的输出,创建的时候，我们可以借用 golang 中的 sync.Once 对象，帮助我们完成单例对象的创建。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">singleton := sync.Once</span><br><span class="line"><span class="keyword">var</span> logger *logrus.Logger</span><br><span class="line"></span><br><span class="line">singleton.Do(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    logger = logrus.New()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>多目标输出</li>
+</ol>
+<p>输出日志的时候，我们往往有多个输出目标：既需要在命令行输出提示，也需要保存在日志文件当中。<br>logger 对象可以设置一个 writer，我们可以借助 io.MultiWriter 对象实现这个功能。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create log file</span></span><br><span class="line">logFilePath := path.Join(config.AppConfig.Log.Path, config.AppConfig.Log.FileName)</span><br><span class="line">fileWriter, err := os.OpenFile(logFilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, <span class="number">0755</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    logger.Panicln(<span class="string">&quot;Fatal error open log file: %s&quot;</span>, err)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// set log output</span></span><br><span class="line">mw := io.MultiWriter(os.Stdout, fileWriter)</span><br><span class="line">logger.SetOutput(mw)</span><br></pre></td></tr></table></figure>
+
+<p>这样就能实现多个输出的日志输出了</p>
+<h2 id="日志格式的初始化"><a href="#日志格式的初始化" class="headerlink" title="日志格式的初始化"></a>日志格式的初始化</h2><p>logrus 提供了一个接口,用于设定日志输出的格式:</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(formatter *logFormatter)</span> <span class="title">Format</span><span class="params">(entry *logrus.Entry)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只要是实现了这个接口的对象，都可以作为格式整理的对象,返回的 byte 数组就是日志内容。</p>
+<p>logrus.Entry 对象包含了必要的日志信息，这里是我习惯用的日志格式定义：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">timestamp := time.Now().Local().Format(<span class="string">&quot;2006/01/02 15:04:05&quot;</span>)</span><br><span class="line">msg := fmt.Sprintf(<span class="string">&quot;%s [%s] %s\n&quot;</span>, timestamp, strings.ToUpper(entry.Level.String()), entry.Message)</span><br><span class="line"><span class="keyword">return</span> []<span class="keyword">byte</span>(msg), <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="日志等级"><a href="#日志等级" class="headerlink" title="日志等级"></a>日志等级</h2><p>logrus 分为多个日志等级:</p>
+<ul>
+<li>trace</li>
+<li>info</li>
+<li>debug</li>
+<li>warnings</li>
+<li>error</li>
+<li>fatal</li>
+<li>panic</li>
+</ul>
+<p>这几个等级的优先级按从上到下的顺序排列。这样带来的好处是：</p>
+<ol>
+<li>可以设定日志输出的等级，在生产环境中可以不用输出太多的日志信息，影响 error 的定位和发现。</li>
+<li>在查找日志信息的时候，可以缩小查找日志范围，也同样能更好定位和发现问题。</li>
+</ol>
+<p>同样，logger 对象有正对这几个等级的不同输出方式：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">logger.Traceln()</span><br><span class="line">logger.Infoln()</span><br><span class="line">logger.Debugln()</span><br><span class="line">logger.Warnln()</span><br><span class="line">logger.Errorln()</span><br><span class="line">logger.Fatalln()</span><br><span class="line">logger.Panicln()</span><br></pre></td></tr></table></figure>
+
+<p>其中，Fatalln() 和 Panicln() 方法会在日志输出完成以后使程序以 Fatal（os.exit()） 或者 Panic 的方式退出。</p>
+<p>我们可以在程序中轻易调节 logger 的输出等级：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Only log the warning severity or above.</span></span><br><span class="line">log.SetLevel(log.WarnLevel)</span><br></pre></td></tr></table></figure>
+
+<p>等级调整好以后，低于设定等级的日志信息就不会输出了。</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
 ]]></content>
+      <tags>
+        <tag>golang</tag>
+      </tags>
   </entry>
   <entry>
     <title>viper</title>
     <url>/2020/12/10/viper/</url>
     <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/viper/">https://blog.kmfchaoyang.top/2020/12/10/viper/</a> by Chaoyang Tang</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>kubeedge使用域名配置cloud地址</title>
-    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
-    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
-<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
-<ol>
-<li>生成证书</li>
-<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
-<li>配置文件中记住配对对应的文件位置</li>
-<li>手动起 cloudcore 和 edgecore</li>
-</ol>
-<p>TODO: 补充文件细节</p>
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
-]]></content>
-      <tags>
-        <tag>kubeedge</tag>
-      </tags>
   </entry>
   <entry>
     <title>kubeedge 两个重要组件镜像制作</title>

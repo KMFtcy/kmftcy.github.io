@@ -20,20 +20,15 @@
     var CONFIG = {"hostname":"blog.kmfchaoyang.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="在设置中代替ip，使用域名作为cloud地址配置。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="kubeedge使用域名配置cloud地址">
-<meta property="og:url" content="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Chaoyang&#39;s Blog">
+<meta property="og:url" content="https://blog.kmfchaoyang.top/tags/golang/index.html">
 <meta property="og:site_name" content="Chaoyang&#39;s Blog">
-<meta property="og:description" content="在设置中代替ip，使用域名作为cloud地址配置。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-25T15:50:41.000Z">
-<meta property="article:modified_time" content="2020-11-29T03:26:06.990Z">
 <meta property="article:author" content="Chaoyang Tang">
-<meta property="article:tag" content="kubeedge">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">
+<link rel="canonical" href="https://blog.kmfchaoyang.top/tags/golang/">
 
 
 <script id="page-configurations">
@@ -41,12 +36,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>kubeedge使用域名配置cloud地址 | Chaoyang's Blog</title>
+  <title>Tag: golang | Chaoyang's Blog</title>
   
 
 
@@ -179,99 +174,51 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content tag">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chaoyang Tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chaoyang's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          kubeedge使用域名配置cloud地址
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-25 23:50:41" itemprop="dateCreated datePublished" datetime="2020-11-25T23:50:41+08:00">2020-11-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-29 11:26:06" itemprop="dateModified" datetime="2020-11-29T11:26:06+08:00">2020-11-29</time>
-              </span>
-
-          
-            <div class="post-description">在设置中代替ip，使用域名作为cloud地址配置。</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h2 class="collection-header">golang
+          <small>Tag</small>
+        </h2>
+      </div>
 
       
-        <p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
-<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
-<ol>
-<li>生成证书</li>
-<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
-<li>配置文件中记住配对对应的文件位置</li>
-<li>手动起 cloudcore 和 edgecore</li>
-</ol>
-<p>TODO: 补充文件细节</p>
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
-
+    <div class="collection-year">
+      <span class="collection-header">2020</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/kubeedge/" rel="tag"># kubeedge</a>
-          </div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2020-12-10T23:33:54+08:00"
+              content="2020-12-10">
+          12-10
+        </time>
+      </div>
 
-        
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/12/10/cobra/" itemprop="url">
+            <span itemprop="name">cobra</span>
+          </a>
+      </div>
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/11/25/acquire-github-release-version/" rel="prev" title="如何获取Github上最新的release版本">
-      <i class="fa fa-chevron-left"></i> 如何获取Github上最新的release版本
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/12/01/kubeedge-image/" rel="next" title="kubeedge 两个重要组件镜像制作">
-      kubeedge 两个重要组件镜像制作 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+    </div>
+  </div>
   
   
+  
+
   
 
 

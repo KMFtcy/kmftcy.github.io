@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>cobra</title>
+    <url>/2020/12/10/cobra/</url>
+    <content><![CDATA[<p>cobra 是 golang 一个用于构建命令行程序的开源库，它提供了对于构建命令行程序非常多的便利特性。例如命令行参数、子命令、自动生成帮助文档等。<br>最近刚好在编写一个命令行程序，总结一些使用过程中的实践。</p>
+<h2 id="创建一个命令实例。"><a href="#创建一个命令实例。" class="headerlink" title="创建一个命令实例。"></a>创建一个命令实例。</h2><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">cmd := &amp;cobra.Command&#123;</span><br><span class="line">    Use:   <span class="string">&quot;test&quot;</span>,</span><br><span class="line">    Short: <span class="string">&quot;Print the version number of cobrademo&quot;</span>,</span><br><span class="line">    Long:  <span class="string">`All software has versions. This is cobrademo&#x27;s`</span>,</span><br><span class="line">    Run: <span class="function"><span class="keyword">func</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">        run()</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Running&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个命令实例是指被使用的命令行程序，当使用命令”ls”的时候，是在使用 ls 这个命令行程序， 当使用命令”ls | grep target”的时候，就使用了 ls 和 grep 两个命令行程序。</p>
+<p>创建的过程中有若干个比较重要的参数：</p>
+<ol>
+<li>Use</li>
+</ol>
+<p>Use 指的是使用该命令行程序的入口命令，当编译的程序为 hello.out，使用例子中的命令行程序的入口就是</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hello.out test</span><br></pre></td></tr></table></figure>
+
+<p>如果不特别指定 Use 属性的话，那么默认的入口就是编译程序本身</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hello.out</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>Run</li>
+</ol>
+<p>Run 属性指定了程序运行的时候运行的函数入口,传入的接口实例要实现以下接口：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中*cobra.Command 是指命令实例本身，args 是指传入该命令行程序的参数。</p>
+<ol start="3">
+<li>Short</li>
+</ol>
+<p>命令行程序的短说明,当使用-h 的时候可以看到该说明和参数的相关说明。</p>
+<ol start="4">
+<li>Long</li>
+</ol>
+<p>命令行程序的长说明。</p>
+<h2 id="定义参数"><a href="#定义参数" class="headerlink" title="定义参数"></a>定义参数</h2><p>调用 cmd 实例提供的接口来传入命令行程序的参数和承接的变量。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">cmd.Flags().StringVarP(&amp;config.ConfigFilePath, <span class="string">&quot;config&quot;</span>, <span class="string">&quot;c&quot;</span>, config.DEFAULT_CONFIG_PATH, <span class="string">&quot;path to config file&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>除了 StringVarP,还有 Bool、Float、Time 等参数类型,可以很方便地接受参数。</p>
+<p>不仅如此，还能给参数配置：</p>
+<ol>
+<li>长短选项，例如”-c”,”–config”;</li>
+<li>配置默认值。</li>
+<li>配置帮助说明。</li>
+</ol>
+<h2 id="添加子命令"><a href="#添加子命令" class="headerlink" title="添加子命令"></a>添加子命令</h2><p>在使用命令行程序的时候，还可能会调用一些子命令，这些命令和参数不一样，会带来不同的行为。<br>例如以下几个调用：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubectl create</span><br><span class="line">kubectl apply</span><br><span class="line">kubectl get</span><br></pre></td></tr></table></figure>
+
+<p>添加子命令之前，我们需要提前创建一个命令行实例，注意该实例一定要实现指定 Use 属性。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">testCmd := &amp;cobra.Command&#123;</span><br><span class="line">    Use:   <span class="string">&quot;version&quot;</span>,</span><br><span class="line">    Short: <span class="string">&quot;Print the version number of cobrademo&quot;</span>,</span><br><span class="line">    Long:  <span class="string">`All software has versions. This is cobrademo&#x27;s`</span>,</span><br><span class="line">    Run: <span class="function"><span class="keyword">func</span><span class="params">(cmd *cobra.Command, args []<span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">        fmt.Println(config.ConfigFilePath)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这之后，将该实例添加进我们命令行程序的管辖。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line">cmd.AddCommand(testCmd)</span><br></pre></td></tr></table></figure>
+
+<p>调用的时候指定子程序就好了</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hello.out version</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义帮助文档"><a href="#定义帮助文档" class="headerlink" title="定义帮助文档"></a>定义帮助文档</h2><p>帮助文档在定义好程序和参数的时候就会自动生成好了，这也是 cobra 一个让人喜爱的特性。</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/cobra/">https://blog.kmfchaoyang.top/2020/12/10/cobra/</a> by Chaoyang Tang</p>
+]]></content>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的hexo博客制作</title>
+    <url>/2020/12/06/hexo-summary/</url>
+    <content><![CDATA[<h2 id="github-集成"><a href="#github-集成" class="headerlink" title="github 集成"></a>github 集成</h2><h2 id="主题与主题配置"><a href="#主题与主题配置" class="headerlink" title="主题与主题配置"></a>主题与主题配置</h2><h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p>#TODO 包含部署脚本，来避免对主题项目的修改</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/">https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
     <title>如何获取Github上最新的release版本</title>
     <url>/2020/11/25/acquire-github-release-version/</url>
     <content><![CDATA[<p>一般下载 github 上的 release 文件的时候，我们都希望能拿到最新的版本，这个事情用脚本去做好像就不是特别的方便。<br>在 cdr/code-server 提供的安装脚本上，我找到一个非常好用的通用解决方案,原来 GitHub 已经提供了这样的 api 接口,只需要去请求就可以获得版本信息。</p>
@@ -15,12 +83,6 @@
 
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/acquire-github-release-version/">https://blog.kmfchaoyang.top/2020/11/25/acquire-github-release-version/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>cobra</title>
-    <url>/2020/12/10/cobra/</url>
-    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/cobra/">https://blog.kmfchaoyang.top/2020/12/10/cobra/</a> by Chaoyang Tang</p>
 ]]></content>
   </entry>
   <entry>
@@ -39,31 +101,6 @@
 ]]></content>
       <tags>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的hexo博客制作</title>
-    <url>/2020/12/06/hexo-summary/</url>
-    <content><![CDATA[<h2 id="github-集成"><a href="#github-集成" class="headerlink" title="github 集成"></a>github 集成</h2><h2 id="主题与主题配置"><a href="#主题与主题配置" class="headerlink" title="主题与主题配置"></a>主题与主题配置</h2><h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p>#TODO 包含部署脚本，来避免对主题项目的修改</p>
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/">https://blog.kmfchaoyang.top/2020/12/06/hexo-summary/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>kubeedge使用域名配置cloud地址</title>
-    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
-    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
-<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
-<ol>
-<li>生成证书</li>
-<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
-<li>配置文件中记住配对对应的文件位置</li>
-<li>手动起 cloudcore 和 edgecore</li>
-</ol>
-<p>TODO: 补充文件细节</p>
-<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
-]]></content>
-      <tags>
-        <tag>kubeedge</tag>
       </tags>
   </entry>
   <entry>
@@ -163,6 +200,36 @@
       </tags>
   </entry>
   <entry>
+    <title>logrus</title>
+    <url>/2020/12/10/logrus/</url>
+    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>viper</title>
+    <url>/2020/12/10/viper/</url>
+    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/viper/">https://blog.kmfchaoyang.top/2020/12/10/viper/</a> by Chaoyang Tang</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>kubeedge使用域名配置cloud地址</title>
+    <url>/2020/11/25/kubeedge-cloud-domain-setting/</url>
+    <content><![CDATA[<p>kubeedge 的文档中，使用 keadm 进行 init 和 join 操作所对应的地址都是 ip 地址。但是实际使用当中，反倒不可能直接将 ip 地址暴露出来，而是 domain 的使用情况更多。但是文档中并没有介绍到使用域名作为地址的方法。</p>
+<p>经过简单实验，发现域名的配置很简单。这里做简单的记录:</p>
+<ol>
+<li>生成证书</li>
+<li>将证书拷贝到各个节点的/etc/kubeedge 目录</li>
+<li>配置文件中记住配对对应的文件位置</li>
+<li>手动起 cloudcore 和 edgecore</li>
+</ol>
+<p>TODO: 补充文件细节</p>
+<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/">https://blog.kmfchaoyang.top/2020/11/25/kubeedge-cloud-domain-setting/</a> by Chaoyang Tang</p>
+]]></content>
+      <tags>
+        <tag>kubeedge</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kubeedge 两个重要组件镜像制作</title>
     <url>/2020/12/01/kubeedge-image/</url>
     <content><![CDATA[<p>将 kubeedge 放入容器当中，这件事听起来就像在 container 里面使用 docker 一样有些错位。</p>
@@ -219,18 +286,6 @@
 
 
 <p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/">https://blog.kmfchaoyang.top/2020/12/01/kubeedge-image/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>viper</title>
-    <url>/2020/12/10/viper/</url>
-    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/viper/">https://blog.kmfchaoyang.top/2020/12/10/viper/</a> by Chaoyang Tang</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>logrus</title>
-    <url>/2020/12/10/logrus/</url>
-    <content><![CDATA[<p>Comming from <a href="https://blog.kmfchaoyang.top/2020/12/10/logrus/">https://blog.kmfchaoyang.top/2020/12/10/logrus/</a> by Chaoyang Tang</p>
 ]]></content>
   </entry>
 </search>
